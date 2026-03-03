@@ -1,6 +1,6 @@
 # RRFErrorCDF
 
-This repository holds the code used in the paper "Beyond singular value gaps in randomized subspace approximation," coauthored with Alex Townsend. Comments and suggestions welcome.
+This repository holds the code used in the paper "Beyond singular value gaps in randomized subspace approximation," coauthored with Alex Townsend and available on the [arXiv](https://arxiv.org/abs/2603.01191). Comments and suggestions welcome.
 
 ## Dependencies
 
