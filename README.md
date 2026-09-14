@@ -9,4 +9,4 @@ Our code requires the `mhg` package of Plamen Koev and Alan Edelman, which is av
 
 ## Usage 
 
-Simply place `mhg` into the folder with the rest of the code. Add them to your path and run `main.m` to generate Figure 1 in the paper. The main algorithm for computing the CDF can be found in `cdf.m` with arguments described therein.
+Include the `mhg` package in your MATLAB path. Run `main.m` to generate the plots in Figure 1 of the paper. The main algorithm for computing the CDF can be found in `cdf.m` with arguments described therein. For the plots in Figures 2-4, run `main_bounds.m`, setting the oversampling parameter `p` to be either 1 or 5 (or something of your own choosing).
