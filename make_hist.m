@@ -36,24 +36,26 @@ n = length(ss);
 data = zeros(1,iter);
 for i = 1:iter
     X = randn(n,k+p);
-    K = ss'.*X;
+    Y = ss'.*X;
+
+    % RRF / RSI with reorthogonalization (HMT '11, Alg. 4.4)
     if method == "standard" || method == "rsi"
+        [Y,~] = qr(Y,'econ');
         for j = 1:q
-            K = ss.^2'.*K; % equivalent to diag(ss)' * diag(ss) * X
+            Y = ss.^2'.*Y; % equivalent to diag(ss)' * diag(ss) * X
+            [Y,~] = qr(Y,'econ');
+        end
+
+    % RBKI with reorthogonalization (Tropp-Webber '23, Alg. 5.4)
+    elseif method == "rbki"
+        K = [Y zeros(n,q*(k+p))];
+        for j = 1:q
+            K(:,j*(k+p)+1:(j+1)*(k+p)) = ss.^2'.*K(:,(j-1)*(k+p)+1:j*(k+p));
         end
         [Y,~] = qr(K,'econ');
-    elseif method == "rbki"
-        K_hat = [K zeros(n,q*(k+p))];
-        for j = 1:q
-            K = ss.^2'.*K;
-            K_hat(:,j*(k+p)+1:(j+1)*(k+p)) = K;
-        end
-        [Q,~] = qr(K_hat,'econ');
-        [U,~,~] = svds(Q'.*ss,k+p); % equivalent to Q'*diag(ss)
-        Y = Q*U;
     end
 
-    Y1 = Y(1:k,1:k+p);
+    Y1 = Y(1:k,:);
     sv = svds(Y1,1,'smallest');
     data(i) = acos(min(sv,1));
 end
