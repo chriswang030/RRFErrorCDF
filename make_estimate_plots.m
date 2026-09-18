@@ -25,7 +25,7 @@ for k = kmin:kmax
     if mod(p,2) == 1
         C(2) = (local_binom(nu+mu,mu+1) / delta)^(1/(p+1)); % C1
     elseif p > 0
-        C(2) = (local_binom(nu+mu,mu+1) / delta)^(1/(p+1)); % C3
+        C(2) = (local_binom(nu+mu,mu+0.5) / delta)^(1/p); % C3
     else
         C(2) = k*(N-k) / delta; % C5
     end
